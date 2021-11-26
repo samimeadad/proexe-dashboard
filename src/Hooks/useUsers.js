@@ -10,6 +10,9 @@ const useUsers = () => {
             .then( data => setUsers( data ) );
     }, [] );
 
+    //store the user data in the local storage
+    localStorage.setItem( 'users', JSON.stringify( users ) );
+
     //return users state variable and setUsers function
     return [ users, setUsers ];
 }
