@@ -47,12 +47,12 @@ const DashboardBody = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map( user => <tr key={ user._id } >
+                            users.map( user => <tr key={ user.id } >
                                 <td>{ user?.id }</td>
                                 <td>{ user?.name }</td>
                                 <td>{ user?.username }</td>
-                                <td>{ user?.email }</td>
                                 <td>{ user?.address?.city }</td>
+                                <td>{ user?.email }</td>
                                 <td><Link to={ `/users/update/${ user.id }` }><Button className="btn btn-success ms-3"><FontAwesomeIcon icon={ faEdit } /></Button></Link></td>
                                 <td><Button onClick={ () => handleDeleteUser( user.id ) } className="btn btn-danger ms-3"><FontAwesomeIcon icon={ faTrash } /></Button></td>
                             </tr> )
