@@ -7,26 +7,22 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const DashboardBody = () => {
-    const [ users, setUsers ] = useUsers();
+    const [ users ] = useUsers();
 
-    //DELETE a Booking
+    // //store the user data in the local storage
+    // localStorage.setItem( 'users', JSON.stringify( users ) );
+
+    const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
+    if ( !usersFromLocalStorage ) {
+        localStorage.setItem( 'users', JSON.stringify( users ) );
+    }
+
+    //DELETE a User Data from local storage
     const handleDeleteUser = id => {
-        const proceed = window.confirm( "Are you sure to delete the user data?" );
-        if ( proceed ) {
-            const url = `https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data/${ id }`;
-            fetch( url, {
-                method: 'DELETE'
-            } )
-                .then( res => res.json() )
-                .then( data => {
-                    if ( data.deletedCount > 0 ) {
-                        const remainingUsers = users.filter( user => parseInt( user.id ) !== parseInt( id ) );
-                        setUsers( remainingUsers );
-                        alert( 'User Data Deleted Successfully' );
-                        window.location.reload( false );
-                    }
-                } )
-        }
+        const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
+        const filteredUsers = usersFromLocalStorage.filter( user => user.id !== id );
+        localStorage.setItem( 'users', JSON.stringify( filteredUsers ) );
+        window.location.reload();
     }
 
     return (
@@ -53,14 +49,14 @@ const DashboardBody = () => {
                     </thead>
                     <tbody>
                         {
-                            users.map( user => <tr key={ user.id } >
+                            usersFromLocalStorage?.map( user => <tr key={ user?.id } >
                                 <td>{ user?.id }</td>
                                 <td>{ user?.name }</td>
                                 <td>{ user?.username }</td>
                                 <td>{ user?.address?.city }</td>
                                 <td>{ user?.email }</td>
-                                <td className="text-center"><Link to={ `/users/update/${ user.id }` }><Button className="btn btn-warning"><FontAwesomeIcon icon={ faEdit } /></Button></Link></td>
-                                <td className="text-center"><Button onClick={ () => handleDeleteUser( user.id ) } className="btn btn-danger"><FontAwesomeIcon icon={ faTrash } /></Button></td>
+                                <td className="text-center"><Link to={ `/users/update/${ user?.id }` }><Button className="btn btn-warning"><FontAwesomeIcon icon={ faEdit } /></Button></Link></td>
+                                <td className="text-center"><Button onClick={ () => handleDeleteUser( user?.id ) } className="btn btn-danger"><FontAwesomeIcon icon={ faTrash } /></Button></td>
                             </tr> )
                         }
 
