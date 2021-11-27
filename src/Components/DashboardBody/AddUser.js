@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 
@@ -93,6 +94,7 @@ const AddUser = () => {
                     error ? <p className="text-danger">{ error }</p> :
                         success && <p className="text-success fw-bold">User Data Added Successfully</p>
                 }
+                <Button onClick={ () => history.push( '/dashboard' ) } className="btn btn-danger me-2">Cancel</Button>
                 <input type="submit" className="btn btn-success" />
             </form>
         </div >
