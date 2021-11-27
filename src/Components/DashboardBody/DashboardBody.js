@@ -56,6 +56,12 @@ const DashboardBody = () => {
         <Container className="my-5 text-start">
             <h2 className="my-5">Dashboard</h2>
             { success && <div className="alert alert-success">User Deleted Successfully</div> }
+
+            {
+                !users.length && <div className="text-danger">
+                    <h3>No User Data Found! Please add a new user!</h3>
+                </div>
+            }
             <div>
                 <hr />
                 <div className="d-flex justify-content-between mb-3">
@@ -86,7 +92,6 @@ const DashboardBody = () => {
                                 <td className="text-center"><Button onClick={ () => handleDeleteUser( user?.id ) } className="btn btn-danger"><FontAwesomeIcon icon={ faTrash } /></Button></td>
                             </tr> )
                         }
-
                     </tbody>
                 </Table>
             </div>
