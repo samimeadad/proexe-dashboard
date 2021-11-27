@@ -11,9 +11,24 @@ const DashboardBody = () => {
     const [ users, setUsers ] = useUsers();
     const [ success, setSuccess ] = useState( false );
 
+
+    //DELETE a User Data from local storage
+    const handleDeleteUser = id => {
+        const proceed = window.confirm( "Are you sure to delete the user data?" );
+
+        if ( proceed ) {
+            const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
+            const filteredUsers = usersFromLocalStorage.filter( user => user.id !== id );
+            setUsers( filteredUsers );
+            localStorage.setItem( 'users', JSON.stringify( filteredUsers ) );
+            setSuccess( true );
+        }
+    }
+
     //Delete a user from API Server. Since the server is with fake data, I just put the code without testing. I have implemented the delete function in the local storage database.
+
     // const handleDeleteUser = id => {
-    //     const proceed = window.confirm( "Are you sure to delete the booking data?" );
+    //     const proceed = window.confirm( "Are you sure to delete the user data?" );
     //     if ( proceed ) {
     //         const url = `https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data/${ id }`;
     //         fetch( url, {
@@ -31,18 +46,6 @@ const DashboardBody = () => {
     //     }
     // }
 
-    //DELETE a User Data from local storage
-    const handleDeleteUser = id => {
-        const proceed = window.confirm( "Are you sure to delete the user data?" );
-
-        if ( proceed ) {
-            const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
-            const filteredUsers = usersFromLocalStorage.filter( user => user.id !== id );
-            setUsers( filteredUsers );
-            localStorage.setItem( 'users', JSON.stringify( filteredUsers ) );
-            setSuccess( true );
-        }
-    }
 
     return (
         <Container className="my-5 text-start">

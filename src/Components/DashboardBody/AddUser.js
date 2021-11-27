@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
+import { useHistory } from 'react-router-dom';
 
 const AddUser = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const users = JSON.parse( localStorage.getItem( 'users' ) );
     const [ success, setSuccess ] = useState( false );
+    const history = useHistory();
 
     const validateEmail = ( email ) => {
         return String( email )
@@ -25,10 +27,34 @@ const AddUser = () => {
             users.push( data );
             localStorage.setItem( 'users', JSON.stringify( users ) );
             setSuccess( true );
+            history.push( '/dashboard' );
             reset();
         }
-
     }
+
+    //Add a user in the API Server. Since the server is with fake data, I just put the code without testing. I have implemented the add function in the local storage database. Define the onSubmit function to submit the form and add a new user to the browser local storage database.
+
+    // const onSubmit = data => {
+    //      data = {
+    //          ...data,
+    //          address: {
+    //              city: data.city
+    //          }   
+    //      }
+    //     fetch( 'https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data/', {
+    //         method: 'POST',
+    //         headers: {
+    //             'content-type': 'application/json'
+    //         },
+    //         body: JSON.stringify( data )
+    //     } )
+    //         .then( res => res.json() )
+    //         .then( data => {
+    //             if ( data.insertedId ) {
+    //                 alert( 'New user has been added successfully. Thank you.' );
+    //             }
+    //         } )
+    // }
 
     return (
         <div>

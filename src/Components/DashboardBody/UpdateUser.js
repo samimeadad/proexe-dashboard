@@ -12,6 +12,7 @@ const UpdateUser = () => {
     const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
     const selectedUser = usersFromLocalStorage?.find( user => parseInt( user?.id ) === parseInt( userId ) );
 
+    //Update user data in the browser local storage
     const onSubmit = data => {
         data = {
             ...data,
@@ -26,8 +27,35 @@ const UpdateUser = () => {
         const updatedUsers = usersFromLocalStorage.map( user => parseInt( user?.id ) === parseInt( selectedUser?.id ) ? updatedUser : user );
         localStorage.setItem( 'users', JSON.stringify( updatedUsers ) );
         setSuccess( true );
+        history.push( '/dashboard' )
         reset();
     }
+
+    //Update a user in the API Server. Since the server is with fake data, I just put the code without testing. I have implemented the add function in the local storage database. Define the onSubmit function to submit the form and update the user to the browser local storage database.
+
+    // const onSubmit = ( id, data ) => {
+    //      data = {
+    //          ...data,
+    //          address: {
+    //              city: data.city
+    //          }
+    //      }
+    //     const url = `https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data/${ id }`;
+    //     fetch( url, {
+    //         method: 'PUT',
+    //         headers: {
+    //             'content-type': 'application/json'
+    //         },
+    //         body: JSON.stringify( data )
+    //     } )
+    //         .then( res => res.json() )
+    //         .then( data => {
+    //             if ( data.modifiedCount > 0 ) {
+    //                 alert( 'User Data Update Successful' );
+    //                 history.push('/dashboard');
+    //             }
+    //         } )
+    // }
 
     return (
         <div>
