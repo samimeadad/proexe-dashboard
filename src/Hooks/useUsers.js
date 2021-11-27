@@ -5,13 +5,19 @@ const useUsers = () => {
     const [ users, setUsers ] = useState( [] );
 
     useEffect( () => {
-        fetch( 'https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data' )
-            .then( res => res.json() )
-            .then( data => setUsers( data ) );
-    }, [ users ] );
-
-    //store the user data in the local storage
-    localStorage.setItem( 'users', JSON.stringify( users ) );
+        if ( localStorage.getItem( 'users' ) ) {
+            const usersFromLocalStorage = JSON.parse( localStorage.getItem( "users" ) );
+            setUsers( usersFromLocalStorage );
+        }
+        else {
+            fetch( 'https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb/data' )
+                .then( res => res.json() )
+                .then( data => {
+                    setUsers( data );
+                    localStorage.setItem( "users", JSON.stringify( data ) );
+                } );
+        }
+    }, [] );
 
     //return users state variable and setUsers function
     return [ users, setUsers ];

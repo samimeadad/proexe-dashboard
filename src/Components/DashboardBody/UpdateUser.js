@@ -1,19 +1,23 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+// import useUsers from '../../Hooks/useUsers';
 
 const UpdateUser = () => {
+    // const [ users, setUsers ] = useUsers();
     const { userId } = useParams();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const users = JSON.parse( localStorage.getItem( 'users' ) );
-    const selectedUser = users?.find( user => parseInt( user?.id ) === parseInt( userId ) );
+    const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
+    const selectedUser = usersFromLocalStorage?.find( user => parseInt( user?.id ) === parseInt( userId ) );
 
     const onSubmit = data => {
         const updatedUser = {
             ...selectedUser,
             ...data
         };
-        const updatedUsers = users.map( user => parseInt( user?.id ) === parseInt( selectedUser?.id ) ? updatedUser : user );
+        console.log( updatedUser );
+        const updatedUsers = usersFromLocalStorage.map( user => parseInt( user?.id ) === parseInt( selectedUser?.id ) ? updatedUser : user );
+        // setUsers( updatedUsers );
         localStorage.setItem( 'users', JSON.stringify( updatedUsers ) );
         reset();
     }
@@ -37,7 +41,6 @@ const UpdateUser = () => {
                 <br />
                 {/* errors will return when field validation fails  */ }
                 { errors.address && <span className="text-danger fw-bold">This field is required</span> }
-                <br /><br />
                 <input type="submit" className="btn btn-success" />
             </form>
         </div>

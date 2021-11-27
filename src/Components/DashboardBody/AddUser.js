@@ -10,7 +10,8 @@ const AddUser = () => {
             ...users,
             ...data
         };
-        localStorage.setItem( 'users', JSON.stringify( updatedUsers ) );
+        console.log( updatedUsers );
+        localStorage.setItem( 'users', JSON.stringify( [ updatedUsers ] ) );
         reset();
 
     }

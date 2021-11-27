@@ -7,22 +7,14 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
 const DashboardBody = () => {
-    const [ users ] = useUsers();
-
-    // //store the user data in the local storage
-    // localStorage.setItem( 'users', JSON.stringify( users ) );
-
-    const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
-    if ( !usersFromLocalStorage ) {
-        localStorage.setItem( 'users', JSON.stringify( users ) );
-    }
+    const [ users, setUsers ] = useUsers();
 
     //DELETE a User Data from local storage
     const handleDeleteUser = id => {
         const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
         const filteredUsers = usersFromLocalStorage.filter( user => user.id !== id );
+        setUsers( filteredUsers );
         localStorage.setItem( 'users', JSON.stringify( filteredUsers ) );
-        window.location.reload();
     }
 
     return (
@@ -49,7 +41,7 @@ const DashboardBody = () => {
                     </thead>
                     <tbody>
                         {
-                            usersFromLocalStorage?.map( user => <tr key={ user?.id } >
+                            users?.map( user => <tr key={ user?.id } >
                                 <td>{ user?.id }</td>
                                 <td>{ user?.name }</td>
                                 <td>{ user?.username }</td>
