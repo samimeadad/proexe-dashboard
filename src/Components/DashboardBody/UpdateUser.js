@@ -1,10 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 const UpdateUser = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const [ success, setSuccess ] = useState( false );
     const { userId } = useParams();
+    const history = useHistory();
     const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
     const selectedUser = usersFromLocalStorage?.find( user => parseInt( user?.id ) === parseInt( userId ) );
 
@@ -19,9 +23,9 @@ const UpdateUser = () => {
             ...selectedUser,
             ...data
         };
-        console.log( updatedUser );
         const updatedUsers = usersFromLocalStorage.map( user => parseInt( user?.id ) === parseInt( selectedUser?.id ) ? updatedUser : user );
         localStorage.setItem( 'users', JSON.stringify( updatedUsers ) );
+        setSuccess( true );
         reset();
     }
 
@@ -44,6 +48,8 @@ const UpdateUser = () => {
                 <br />
                 {/* errors will return when field validation fails  */ }
                 { errors.address && <span className="text-danger fw-bold">This field is required</span> }
+                { success && <p className="text-success fw-bold">User Data Updated Successfully</p> }
+                <Button onClick={ () => history.push( '/dashboard' ) } className="btn btn-danger me-2">Cancel</Button>
                 <input type="submit" className="btn btn-success" />
             </form>
         </div>
