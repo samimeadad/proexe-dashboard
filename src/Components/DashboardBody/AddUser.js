@@ -4,16 +4,18 @@ import { useForm } from "react-hook-form";
 const AddUser = () => {
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const users = JSON.parse( localStorage.getItem( 'users' ) );
+    console.log( users );
 
     const onSubmit = data => {
-        const updatedUsers = {
-            ...users,
-            ...data
-        };
-        console.log( updatedUsers );
-        localStorage.setItem( 'users', JSON.stringify( [ updatedUsers ] ) );
+        data = {
+            ...data,
+            address: {
+                city: data.city
+            }
+        }
+        users.push( data );
+        localStorage.setItem( 'users', JSON.stringify( users ) );
         reset();
-
     }
 
     return (
