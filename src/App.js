@@ -4,6 +4,7 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import UpdateUser from './Components/DashboardBody/UpdateUser';
 import Header from './Components/Header/Header';
 import AddUser from './Components/DashboardBody/AddUser';
+import ErrorPage from './Components/ErrorPage/ErrorPage';
 
 function App () {
   return (
@@ -15,6 +16,7 @@ function App () {
           <Route exact path="/dashboard" component={ Dashboard } />
           <Route exact path="/users/update/:userId" component={ UpdateUser } />
           <Route exact path="/users/addUser" component={ AddUser } />
+          <Route exact path="*" component={ ErrorPage } />
         </Switch>
       </Router>
     </div>

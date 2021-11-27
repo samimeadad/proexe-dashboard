@@ -5,11 +5,22 @@ import { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
 const UpdateUser = () => {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const [ success, setSuccess ] = useState( false );
+    //extract the matched user Id from the url path
     const { userId } = useParams();
+
+    //variables for react-hook-form
+    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+
+    //set the state of the user to be updated. if success is true then show the success message that user is updated successfully
+    const [ success, setSuccess ] = useState( false );
+
+    //hook for redirection to the home page after adding a user
     const history = useHistory();
+
+    //get all users from browser local storage
     const usersFromLocalStorage = JSON.parse( localStorage.getItem( 'users' ) );
+
+    //select the required user by matching the url path parameter (userId) and user Id from the local storage database
     const selectedUser = usersFromLocalStorage?.find( user => parseInt( user?.id ) === parseInt( userId ) );
 
     //Update user data in the browser local storage
@@ -58,10 +69,10 @@ const UpdateUser = () => {
     // }
 
     return (
-        <div>
+        <div className="my-5">
             <h1>Update User: <span className="text-primary">{ selectedUser?.name }</span></h1>
             <form onSubmit={ handleSubmit( onSubmit ) } className="m-5">
-                <p className="fw-bold text-danger">Please submit the below form to update the user data</p>
+                <p className="fw-bold text-danger">Please Submit the below form to update the user data or press Cancel to return back to your dashboard</p>
                 <input type="text" defaultValue={ selectedUser?.name } { ...register( "name", { required: true } ) } />
                 <br />
                 <br />

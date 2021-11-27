@@ -7,13 +7,18 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
+//Main component to render the elements of dashboard body (user data table)
 const DashboardBody = () => {
+    //import the user information from the customer hook useUsers()
     const [ users, setUsers ] = useUsers();
+
+    //set the state of the user to be deleted. if success is true then show the success message
     const [ success, setSuccess ] = useState( false );
 
 
     //DELETE a User Data from local storage
     const handleDeleteUser = id => {
+        //get the alert message for user delete. if proceed is true then delete the user
         const proceed = window.confirm( "Are you sure to delete the user data?" );
 
         if ( proceed ) {
@@ -57,7 +62,7 @@ const DashboardBody = () => {
                     <h2>User List</h2>
                     <Link to="/users/addUser"><Button className="btn btn-primary">Add New User</Button></Link>
                 </div>
-                <Table striped bordered responsive>
+                <Table striped bordered responsive className="sortable">
                     <thead>
                         <tr>
                             <th>Id</th>
